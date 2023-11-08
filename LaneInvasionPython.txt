@@ -1,0 +1,34 @@
+Binary file PythonAPI/carla/build/lib.linux-x86_64-3.8/carla/libcarla.cpython-38-x86_64-linux-gnu.so matches
+Binary file PythonAPI/carla/build/temp.linux-x86_64-3.8/source/libcarla/libcarla.o matches
+PythonAPI/carla/dependencies/include/carla/sensor/data/LaneInvasionEvent.cpp:7:#include "carla/sensor/data/LaneInvasionEvent.h"
+PythonAPI/carla/dependencies/include/carla/sensor/data/LaneInvasionEvent.cpp:16:  SharedPtr<client::Actor> LaneInvasionEvent::GetActor() const {
+PythonAPI/carla/dependencies/include/carla/sensor/data/LaneInvasionEvent.cpp:20:      throw_exception(std::runtime_error("LaneInvasionEvent: parent already dead"));
+PythonAPI/carla/dependencies/include/carla/sensor/data/LaneInvasionEvent.h:22:  class LaneInvasionEvent : public SensorData {
+PythonAPI/carla/dependencies/include/carla/sensor/data/LaneInvasionEvent.h:27:    explicit LaneInvasionEvent(
+PythonAPI/carla/dependencies/include/carla/sensor/SensorRegistry.h:40:class ALaneInvasionSensor;
+PythonAPI/carla/dependencies/include/carla/sensor/SensorRegistry.h:71:    std::pair<ALaneInvasionSensor *, s11n::NoopSerializer>,
+PythonAPI/carla/dependencies/include/carla/sensor/SensorRegistry.h:100:#include "Carla/Sensor/LaneInvasionSensor.h"
+PythonAPI/carla/dependencies/include/carla/client/LaneInvasionSensor.h:19:  class LaneInvasionSensor final : public ClientSideSensor {
+PythonAPI/carla/dependencies/include/carla/client/LaneInvasionSensor.h:24:    ~LaneInvasionSensor();
+PythonAPI/carla/dependencies/include/carla/client/LaneInvasionSensor.cpp:7:#include "carla/client/LaneInvasionSensor.h"
+PythonAPI/carla/dependencies/include/carla/client/LaneInvasionSensor.cpp:15:#include "carla/sensor/data/LaneInvasionEvent.h"
+PythonAPI/carla/dependencies/include/carla/client/LaneInvasionSensor.cpp:37:  // -- LaneInvasionCallback ---------------------------------------------------
+PythonAPI/carla/dependencies/include/carla/client/LaneInvasionSensor.cpp:40:  class LaneInvasionCallback {
+PythonAPI/carla/dependencies/include/carla/client/LaneInvasionSensor.cpp:43:    LaneInvasionCallback(
+PythonAPI/carla/dependencies/include/carla/client/LaneInvasionSensor.cpp:78:  void LaneInvasionCallback::Tick(const WorldSnapshot &snapshot) const {
+PythonAPI/carla/dependencies/include/carla/client/LaneInvasionSensor.cpp:116:      _callback(MakeShared<sensor::data::LaneInvasionEvent>(
+PythonAPI/carla/dependencies/include/carla/client/LaneInvasionSensor.cpp:125:  std::shared_ptr<const LaneInvasionCallback::Bounds> LaneInvasionCallback::MakeBounds(
+PythonAPI/carla/dependencies/include/carla/client/LaneInvasionSensor.cpp:139:  // -- LaneInvasionSensor -----------------------------------------------------
+PythonAPI/carla/dependencies/include/carla/client/LaneInvasionSensor.cpp:142:  LaneInvasionSensor::~LaneInvasionSensor() {
+PythonAPI/carla/dependencies/include/carla/client/LaneInvasionSensor.cpp:146:  void LaneInvasionSensor::Listen(CallbackFunctionType callback) {
+PythonAPI/carla/dependencies/include/carla/client/LaneInvasionSensor.cpp:155:    auto cb = std::make_shared<LaneInvasionCallback>(
+PythonAPI/carla/dependencies/include/carla/client/LaneInvasionSensor.cpp:164:        log_error("LaneInvasionSensor:", e.what());
+PythonAPI/carla/dependencies/include/carla/client/LaneInvasionSensor.cpp:174:  void LaneInvasionSensor::Stop() {
+PythonAPI/carla/dependencies/include/carla/client/detail/ActorFactory.cpp:12:#include "carla/client/LaneInvasionSensor.h"
+PythonAPI/carla/dependencies/include/carla/client/detail/ActorFactory.cpp:79:      return MakeActorImpl<LaneInvasionSensor>(std::move(init), gc);
+Binary file PythonAPI/carla/dependencies/lib/libcarla_client.a matches
+Binary file PythonAPI/carla/dependencies/lib/libcarla_client_debug.a matches
+PythonAPI/carla/source/libcarla/Sensor.cpp:9:#include <carla/client/LaneInvasionSensor.h>
+PythonAPI/carla/source/libcarla/Sensor.cpp:49:  class_<cc::LaneInvasionSensor, bases<cc::ClientSideSensor>, boost::noncopyable, boost::shared_ptr<cc::LaneInvasionSensor>>
+PythonAPI/carla/source/libcarla/Sensor.cpp:50:      ("LaneInvasionSensor", no_init)
+PythonAPI/carla/sourc

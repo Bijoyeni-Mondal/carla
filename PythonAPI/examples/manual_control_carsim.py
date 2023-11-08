@@ -247,6 +247,7 @@ class World(object):
         # Set up the sensors.
         self.collision_sensor = CollisionSensor(self.player, self.hud)
         self.lane_invasion_sensor = LaneInvasionSensor(self.player, self.hud)
+        self.long_range_radar_sensor = LongRangeRadarSensor(self.player)
         self.gnss_sensor = GnssSensor(self.player)
         self.imu_sensor = IMUSensor(self.player)
         self.camera_manager = CameraManager(self.player, self.hud, self._gamma)
@@ -816,6 +817,42 @@ class LaneInvasionSensor(object):
         text = ['%r' % str(x).split()[-1] for x in lane_types]
         self.hud.notification('Crossed line %s' % ' and '.join(text))
 
+
+# ==============================================================================
+# -- LongRangeRadarSensor --------------------------------------------------------
+# ==============================================================================
+
+class LongRangeRadarSensor(object):
+    def __init__(self, parent_actor):
+        self.sensor = []  # Initialize as an empty list to store radar sensors
+        self.parent_actor = parent_actor
+        world = self.parent_actor.get_world()  # Fixed typo, changed _parent to parent_actor
+
+        radar_location = carla.Location(x=2.8, y=0.0, z=1.0)
+        radar_rotation = carla.Rotation(pitch=0, yaw=0, roll=0)
+        radar_transform = carla.Transform(radar_location, radar_rotation)
+
+        radar_blueprint = world.get_blueprint_library().find('sensor.other.radar')
+        radar_blueprint.set_attribute('horizontal_fov', '45')  # Set the field of view.
+        radar_blueprint.set_attribute('range', '100')  # Set the range.
+        radar_blueprint.set_attribute('points_per_second', '10000')  # Adjust as needed.
+        radar_blueprint.set_attribute('debug_linetrace', 'True')  # Enable debug lines (optional).
+
+        # Create and listen to the radar sensor
+        radar_sensor = world.spawn_actor(radar_blueprint, radar_transform)
+        radar_sensor.listen(lambda data: LongRangeRadarSensor.radar_callback(data))
+        self.sensor.append(radar_sensor)
+
+    @staticmethod
+    def radar_callback(data):
+        # Process RADAR data here.
+        for detection in data:
+            if detection.type == carla.RssResponse.DetectionObjectType.Car:
+                # This is a car detected by the RADAR sensor.
+                car_location = detection.position
+                car_velocity = detection.velocity
+                # You can perform any custom processing here.
+                print(f"Car detected at position {car_location} with velocity {car_velocity}.")
 
 # ==============================================================================
 # -- GnssSensor ----------------------------------------------------------------

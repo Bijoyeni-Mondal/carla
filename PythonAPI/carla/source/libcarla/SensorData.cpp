@@ -15,6 +15,7 @@
 #include <carla/sensor/data/ObstacleDetectionEvent.h>
 #include <carla/sensor/data/Image.h>
 #include <carla/sensor/data/LaneInvasionEvent.h>
+#include <carla/sensor/data/LongRangeRadarEvent.h>
 #include <carla/sensor/data/LidarMeasurement.h>
 #include <carla/sensor/data/SemanticLidarMeasurement.h>
 #include <carla/sensor/data/GnssMeasurement.h>
@@ -86,6 +87,13 @@ namespace data {
 
   std::ostream &operator<<(std::ostream &out, const LaneInvasionEvent &meas) {
     out << "LaneInvasionEvent(frame=" << std::to_string(meas.GetFrame())
+        << ", timestamp=" << std::to_string(meas.GetTimestamp())
+        << ')';
+    return out;
+  }
+
+  std::ostream &operator<<(std::ostream &out, const LongRangeRadarEvent &meas) {
+    out << "LongRangeRadarEvent(frame=" << std::to_string(meas.GetFrame())
         << ", timestamp=" << std::to_string(meas.GetTimestamp())
         << ')';
     return out;
@@ -493,6 +501,13 @@ void export_sensor_data() {
     .add_property("crossed_lane_markings", CALL_RETURNING_LIST(csd::LaneInvasionEvent, GetCrossedLaneMarkings))
     .def(self_ns::str(self_ns::self))
   ;
+
+  class_<csd::LongRangeRadarEvent, bases<cs::SensorData>, boost::noncopyable, boost::shared_ptr<csd::LongRangeRadarEvent>>("LongRangeRadarEvent", no_init)
+    .add_property("actor", &csd::LongRangeRadarEvent::GetActor)
+    .add_property("crossed_lane_markings", CALL_RETURNING_LIST(csd::LongRangeRadarEvent, GetCrossedLaneMarkings))
+    .def(self_ns::str(self_ns::self))
+  ;
+
 
   class_<csd::GnssMeasurement, bases<cs::SensorData>, boost::noncopyable, boost::shared_ptr<csd::GnssMeasurement>>("GnssMeasurement", no_init)
     .add_property("latitude", &csd::GnssMeasurement::GetLatitude)

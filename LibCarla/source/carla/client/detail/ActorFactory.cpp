@@ -78,6 +78,8 @@ namespace detail {
     if (description.description.id == "sensor.other.lane_invasion") {
       return MakeActorImpl<LaneInvasionSensor>(std::move(init), gc);
 #ifdef RSS_ENABLED
+    } else if (description.description.id == "sensor.other.radar") {
+      return MakeActorImpl<LongRangeRadarSensor>(std::move(init), gc);
     } else if (description.description.id == "sensor.other.rss") {
       return MakeActorImpl<RssSensor>(std::move(init), gc);
 #endif

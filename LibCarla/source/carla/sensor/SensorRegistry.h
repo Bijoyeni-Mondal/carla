@@ -38,6 +38,7 @@ class ADVSCamera;
 class AGnssSensor;
 class AInertialMeasurementUnit;
 class ALaneInvasionSensor;
+class ALongRangeRadarSensor;
 class AObstacleDetectionSensor;
 class AOpticalFlowCamera;
 class ARadar;
@@ -69,6 +70,7 @@ namespace sensor {
     std::pair<AGnssSensor *, s11n::GnssSerializer>,
     std::pair<AInertialMeasurementUnit *, s11n::IMUSerializer>,
     std::pair<ALaneInvasionSensor *, s11n::NoopSerializer>,
+    std::pair<ALongRangeRadarSensor *, s11n::NoopSerializer>,
     std::pair<AObstacleDetectionSensor *, s11n::ObstacleDetectionEventSerializer>,
     std::pair<AOpticalFlowCamera *, s11n::OpticalFlowImageSerializer>,
     std::pair<ARadar *, s11n::RadarSerializer>,
@@ -98,6 +100,7 @@ namespace sensor {
 #include "Carla/Sensor/GnssSensor.h"
 #include "Carla/Sensor/InertialMeasurementUnit.h"
 #include "Carla/Sensor/LaneInvasionSensor.h"
+#include "Carla/Sensor/LongRangeRadarSensor.h"
 #include "Carla/Sensor/ObstacleDetectionSensor.h"
 #include "Carla/Sensor/OpticalFlowCamera.h"
 #include "Carla/Sensor/Radar.h"
