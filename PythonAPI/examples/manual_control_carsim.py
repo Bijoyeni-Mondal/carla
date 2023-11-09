@@ -853,7 +853,7 @@ class LongRangeRadarSensor(object):
                 car_velocity = detection.velocity
                 # You can perform any custom processing here.
                 print(f"Car detected at position {car_location} with velocity {car_velocity}.")
-                print("hs")
+                
 
 # ==============================================================================
 # -- GnssSensor ----------------------------------------------------------------

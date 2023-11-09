@@ -35,6 +35,7 @@ struct RadarDataPoint {
     geom::Location location;
     double relative_velocity;
     double distance;
+    double azimuth;
 };
 
 // RadarCallback class for handling radar measurements
@@ -71,6 +72,9 @@ void RadarCallback::Tick(const WorldSnapshot &snapshot) const {
         data_point.location = object.GetLocation();
         data_point.relative_velocity = object.GetVelocity().Length();
         data_point.distance = (object.GetLocation() - parent->GetLocation()).Length();
+        //Calculate azimuth angle in degree
+        const geom::vector3D realative_location=object.GetLocation() - parent->GetLocation();
+        data_point.azimuth = std::atan2(realative_location.y, realative_location.x)*(180.0/ geom::Math::Pi<double>());
         radar_data.push_back(data_point);
     }
 
