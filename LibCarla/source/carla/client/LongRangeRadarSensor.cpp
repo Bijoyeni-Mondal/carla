@@ -68,7 +68,7 @@ void RadarCallback::Tick(const WorldSnapshot &snapshot) const {
 
     //iterate over detected objects and calculate radar data points.
     for (const auto &object : parent->GetDetectedObjects()) {
-        RadarDataPoint data_point;
+        LongRangeRadarEvent data_point;
         data_point.location = object.GetLocation();
         data_point.relative_velocity = object.GetVelocity().Length();
         data_point.distance = (object.GetLocation() - parent->GetLocation()).Length();
@@ -79,7 +79,7 @@ void RadarCallback::Tick(const WorldSnapshot &snapshot) const {
     }
 
     // Create a LongRangeRadarSensorEvent instance with the collected radar data.
-    const auto radar_event = std::make_shared<sensor::data::LongRangeRadarSensorEvent>(
+    const auto radar_event = std::make_shared<sensor::data::LongRangeRadarEvent>(
         snapshot.GetFrame(),
         snapshot.GetTimestamp().elapsed_seconds,
         parent->GetTransform(),
