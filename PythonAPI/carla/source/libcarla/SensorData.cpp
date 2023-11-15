@@ -504,7 +504,7 @@ void export_sensor_data() {
 
   class_<csd::LongRangeRadarEvent, bases<cs::SensorData>, boost::noncopyable, boost::shared_ptr<csd::LongRangeRadarEvent>>("LongRangeRadarEvent", no_init)
     .add_property("actor", &csd::LongRangeRadarEvent::GetActor)
-    .add_property("crossed_lane_markings", CALL_RETURNING_LIST(csd::LongRangeRadarEvent, GetCrossedLaneMarkings))
+    //.add_property("crossed_lane_markings", CALL_RETURNING_LIST(csd::LongRangeRadarEvent, GetCrossedLaneMarkings))
     .def(self_ns::str(self_ns::self))
   ;
 

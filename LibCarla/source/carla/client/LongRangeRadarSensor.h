@@ -7,8 +7,19 @@
 #pragma once
 
 #include "carla/client/ClientSideSensor.h"
+#include "carla/geom/Location.h"
+
 
 #include <atomic>
+
+// Radar data point structure
+
+struct RadarDataPoint {
+    carla::geom::Location location;
+    double relative_velocity;
+    double distance;
+    double azimuth;
+};
 
 namespace carla {
 namespace client {

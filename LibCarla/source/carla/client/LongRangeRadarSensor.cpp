@@ -30,13 +30,6 @@ static geom::Location Rotate(float yaw, const geom::Location &location) {
     };
 }
 
-// Radar data point structure
-struct RadarDataPoint {
-    geom::Location location;
-    double relative_velocity;
-    double distance;
-    double azimuth;
-};
 
 // RadarCallback class for handling radar measurements
 class RadarCallback {
@@ -52,8 +45,24 @@ public:
 
 private:
 
+    struct Bounds {
+      size_t frame;
+      std::array<geom::Location, 4u> corners;
+    };
+
+    std::shared_ptr<const Bounds> MakeBounds(
+        size_t frame,
+        const geom::Transform &vehicle_transform) const;
+
     ActorId _parent;
+
+    //geom::BoundingBox _parent_bounding_box;
+
+    //SharedPtr<const Map> _map;
+
     Sensor::CallbackFunctionType _callback;
+
+    mutable AtomicSharedPtr<const Bounds> _bounds;
 };
 
 void RadarCallback::Tick(const WorldSnapshot &snapshot) const {
@@ -67,17 +76,18 @@ void RadarCallback::Tick(const WorldSnapshot &snapshot) const {
     std::vector<RadarDataPoint> radar_data;
 
     //iterate over detected objects and calculate radar data points.
+    #if BASE_RADAR_P
     for (const auto &object : parent->GetDetectedObjects()) {
-        LongRangeRadarEvent data_point;
+        RadarDataPoint data_point;
         data_point.location = object.GetLocation();
         data_point.relative_velocity = object.GetVelocity().Length();
         data_point.distance = (object.GetLocation() - parent->GetLocation()).Length();
         //Calculate azimuth angle in degree
-        const geom::vector3D realative_location=object.GetLocation() - parent->GetLocation();
+        const geom::Vector3D realative_location=object.GetLocation() - parent->GetLocation();
         data_point.azimuth = std::atan2(realative_location.y, realative_location.x)*(180.0/ geom::Math::Pi<double>());
         radar_data.push_back(data_point);
     }
-
+   
     // Create a LongRangeRadarSensorEvent instance with the collected radar data.
     const auto radar_event = std::make_shared<sensor::data::LongRangeRadarEvent>(
         snapshot.GetFrame(),
@@ -85,9 +95,10 @@ void RadarCallback::Tick(const WorldSnapshot &snapshot) const {
         parent->GetTransform(),
         parent->GetId(),
         radar_data);
-
+    
     // Trigger the callback with the radar event.
     _callback(radar_event);
+    #endif
 }
 
 // LongRangeRadarSensor class for handling radar measurements

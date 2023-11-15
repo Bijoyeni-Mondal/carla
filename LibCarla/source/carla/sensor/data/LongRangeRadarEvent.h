@@ -8,6 +8,7 @@
 
 #include "carla/sensor/SensorData.h"
 #include "carla/client/Actor.h"
+#include "carla/client/LongRangeRadarSensor.h"
 #include "carla/rpc/ActorId.h"
 #include <vector>
 #include "carla/geom/Transform.h"
